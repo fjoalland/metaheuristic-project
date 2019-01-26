@@ -1,6 +1,6 @@
 import csv
 import pandas as pd
-
+import random
 #Contains distances between capitals
 Distances=[]
 
@@ -24,4 +24,19 @@ print(len(Capitals))
 print(len(Distances))
 Data1 = pd.DataFrame(Distances, columns=Capitals, index=Capitals) # Dataframe for the capitals
 
-print(Data1)
+print(Data1.loc["Paris", "Bruxelles"])
+print(len(Data1.get("Paris")))
+
+print('-----')
+#We start from Paris, so we already have this capital in our Path
+path = ['Paris']
+random.shuffle(Capitals)
+for index, capi in enumerate(Capitals):
+    for index, cap in enumerate(Capitals):
+        if(Data1.loc[path[len(path)-1],cap] != "-" and cap not in path):
+            print(Data1.loc[path[len(path)-1],cap])
+            path.append(cap)
+            break
+    
+print(path)
+print(len(path))
