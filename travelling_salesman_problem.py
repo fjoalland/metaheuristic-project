@@ -25,12 +25,12 @@ with open('base2.csv', newline='') as csvfile:
 # Dataframe for the capitals
 intercapitalDistanceData = pd.DataFrame(Distances, columns=Capitals, index=Capitals) 
 listScore=[]
-
+listPath=[]
 #****************************************
 #******GENERATION OF THE POPULATION******
 #****************************************
 print('---Create Population--')
-for x in range(10000):
+for x in range(30000):
     #In order to have genes of random individuals, capitals are randomly arranged.
     random.shuffle(Capitals)
     #We start from Paris, so we already have this capital in our Path
@@ -49,12 +49,13 @@ for x in range(10000):
                 path.append(cap)
                 
     if(len(path)==18):
-        print("--------")
-        print(path)
+        #print("--------")
+        #print(path)
         score=0
         for index, geneCapital in enumerate(path):
             if(index == len(Capitals)):  
-                print('********')
+                #print('********')
+                i = 5
             else:
                 #print(geneCapital + "-" + path[index+1])
                 listOfDistance = intercapitalDistanceData.loc[geneCapital,path[index+1]].split("/")
@@ -63,11 +64,15 @@ for x in range(10000):
                     if("-" in listOfDistance):
                         listOfDistance.remove("-")
                 listOfDistance.sort()
-                print(listOfDistance)
+                #print(listOfDistance)
                 score=score+int(listOfDistance[0])
-        print(score)
+        #print(score)
         listScore.append(score)
+        path.append(score)
+        #listPath.append(path)
+
 listScore.sort()
-print(set(listScore))
-           
+print(listScore)
+#print(listPath)
+
            
