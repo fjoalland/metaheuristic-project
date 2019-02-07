@@ -3,7 +3,7 @@ import pandas as pd
 import random
 #Contains distances between capitals
 Distances=[]
-
+firstCity="Paris"
 #**********************************
 #******LOADING THE CSV FILE********
 #**********************************
@@ -25,16 +25,18 @@ with open('base2.csv', newline='') as csvfile:
 # Dataframe for the capitals
 intercapitalDistanceData = pd.DataFrame(Distances, columns=Capitals, index=Capitals) 
 listScore=[]
-listPath=[]
+population=[]
+incrementPath=0
 #****************************************
 #******GENERATION OF THE POPULATION******
 #****************************************
 print('---Create Population--')
-for x in range(30000):
+for x in range(1000):
     #In order to have genes of random individuals, capitals are randomly arranged.
     random.shuffle(Capitals)
     #We start from Paris, so we already have this capital in our Path
-    path = ['Paris']
+    path = [firstCity]
+    
     #Loop in all capitals
     for column in range(len(Capitals)):
         #Loop on the list of capitals randomly ranked
@@ -43,7 +45,7 @@ for x in range(30000):
                 #print("Size of the current path {}, size of capitals {}".format(len(path), len(Capitals)))
                 if(intercapitalDistanceData.loc[path[len(path)-1], cap]!= "" and intercapitalDistanceData.loc[path[0], cap]!= "" and cap not in path):
                     path.append(cap)
-                    path.append("Paris")
+                    path.append(firstCity)
             #If the proposed capital is a destination of the current capital, we add it to our solution
             elif (intercapitalDistanceData.loc[path[len(path)-1],cap] != "" and cap not in path):
                 path.append(cap)
@@ -67,12 +69,23 @@ for x in range(30000):
                 #print(listOfDistance)
                 score=score+int(listOfDistance[0])
         #print(score)
-        listScore.append(score)
-        path.append(score)
-        #listPath.append(path)
+        
+        listScore.append([ score , incrementPath])
+        population.append(path)
+        incrementPath += 1
 
 listScore.sort()
+print(len(listScore))
 print(listScore)
-#print(listPath)
 
-           
+
+
+charismaticRay=len(population)//random.randint(7,12)
+print(charismaticRay)
+#****************************************
+#**********MATINF OF INDIVIDUALS*********
+#****************************************
+for index, individu in enumerate(listScore):
+    print(individu)
+    print(population[individu[1]])
+    
