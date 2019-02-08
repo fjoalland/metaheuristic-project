@@ -31,7 +31,7 @@ incrementPath=0
 #******GENERATION OF THE POPULATION******
 #****************************************
 print('---Create Population--')
-for x in range(20000):
+for x in range(1000):
     #In order to have genes of random individuals, capitals are randomly arranged.
     random.shuffle(Capitals)
     #We start from Paris, so we already have this capital in our Path
