@@ -31,7 +31,7 @@ incrementPath=0
 #******GENERATION OF THE POPULATION******
 #****************************************
 print('---Create Population--')
-for x in range(1000):
+for x in range(20000):
     #In order to have genes of random individuals, capitals are randomly arranged.
     random.shuffle(Capitals)
     #We start from Paris, so we already have this capital in our Path
@@ -52,13 +52,10 @@ for x in range(1000):
                 
     if(len(path)==18):
         #print("--------")
-        #print(path)
+        print(path)
         score=0
         for index, geneCapital in enumerate(path):
-            if(index == len(Capitals)):  
-                #print('********')
-                i = 5
-            else:
+            if(index != len(Capitals)):  
                 #print(geneCapital + "-" + path[index+1])
                 listOfDistance = intercapitalDistanceData.loc[geneCapital,path[index+1]].split("/")
                 if("-" in listOfDistance):
@@ -76,16 +73,14 @@ for x in range(1000):
 
 listScore.sort()
 print(len(listScore))
-print(listScore)
+#print(listScore)
 
 
 
-charismaticRay=len(population)//random.randint(7,12)
-print(charismaticRay)
+
 #****************************************
 #**********MATINF OF INDIVIDUALS*********
 #****************************************
 for index, individu in enumerate(listScore):
-    print(individu)
-    print(population[individu[1]])
-    
+    charismaticRay=len(population)//random.randint(7,12)
+    #print(min(((k, v[0]) for k, v in listScore), key=lambda key:min(individu[0])))
