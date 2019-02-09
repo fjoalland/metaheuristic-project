@@ -4,25 +4,19 @@ import random
 
 #Contains distances between capitals
 Distances=[]
-
 #The beginning city and the point of arrival
 firstCity="Paris"
-
 #Number of cities
 cityCount=18
-
 #This corresponds to the percentage of mortality of individuals. 
 #The stronger an individual, the more likely he is to stay alive and reproduce
 individualsTournamentCount=5
-
 listIdentifierUser = []
-
 #The chance percentage that allows an elite to survive the next generation
-survivalElite=0.10
-
-chanceOfMutation = 20
-
-bestPath = "global"
+survivalElite=0.12
+chanceOfMutation = 22
+bestScore = 9999999
+bestPath = []
 
 #**********************************
 #******LOADING THE CSV FILE********
@@ -52,7 +46,7 @@ incrementPath=0
 #******GENERATION OF THE POPULATION******
 #****************************************
 print('---Create Population--')
-for x in range(1500):
+for x in range(25000):
     #In order to have genes of random individuals, capitals are randomly arranged.
     random.shuffle(Capitals)
     #We start from Paris, so we already have this capital in our Path
@@ -95,6 +89,28 @@ for x in range(1500):
 listScore.sort()
 scoreCount = len(listScore)
 
+def generatePopulation(size):
+    newPopulation = []
+    for x in range(size):
+        random.shuffle(Capitals)
+        path = [firstCity]
+        for column in range(len(Capitals)):
+            #Loop on the list of capitals randomly ranked
+            for index, cap in enumerate(Capitals):
+                if(len(path) == len(Capitals) - 1):
+                    #print("Size of the current path {}, size of capitals {}".format(len(path), len(Capitals)))
+                    if(intercapitalDistanceData.loc[path[len(path)-1], cap]!= "" and intercapitalDistanceData.loc[path[0], cap]!= "" and cap not in path):
+                        path.append(cap)
+                        path.append(firstCity)
+                #If the proposed capital is a destination of the current capital, we add it to our solution
+                elif (intercapitalDistanceData.loc[path[len(path)-1],cap] != "" and cap not in path):
+                    path.append(cap)
+        if(len(path) == cityCount):
+            newPopulation.append(path)
+        
+    return newPopulation
+
+
 def calculateScore(candidate, id):
     score=0
     for index, geneCapital in enumerate(candidate):
@@ -116,14 +132,9 @@ def calculateScore(candidate, id):
     if(score != 0):
         listScore.append([score, id])
     
-    if(score <= bestscore and score != 0):
-        print('********z**********************')
-
-        bestPath = candidate
-        print(bestPath)
-        bestPath = "hrhr"
-
-        print('********v**********************')
+    if(score <= bestScore and score != 0):
+        del bestPath[:]
+        bestPath.append(candidate)
 
     return score
     
@@ -189,15 +200,18 @@ def mutation(individual):
 initial = listScore.copy()
 
 populationScore = []
-bestScore = 9999999
 
-for x in range(20):
+for x in range(40):
+    print("generation ", x)
+    print("Size of the population ", len(listScore))
+    print("Bestscore ", bestScore)
+
     listTopCandidatesNextGeneration = []
 
     listScore.sort()
     if(listScore):
         if(listScore[0][0]<bestScore):
-            bestscore = listScore[0][0]
+            bestScore = int(listScore[0][0])
         listTopCandidatesNextGeneration = topCandidates(listScore)
         populationScore = listScore.copy()
         populationScore.sort()
@@ -218,45 +232,17 @@ for x in range(20):
         if(listTopCandidatesNextGeneration):
             listScore.append(listTopCandidatesNextGeneration[0])
       
-   
-
-#print(initial)
+ 
 print('******************************')
 print('******************************')
-print('******************************')
-
-listScore.sort()
-
-#print(listScore)
-
-
-
-print('******************************')
-print('******************************')
-print('******************************')
-print('******************************')
-print('******************************')
-print('******************************')
-print('******************************')
-print('******************************')
-print('******************************')
-print(initial[0])
-
-print(listScore[0])
-print(bestscore)
+print("Initial Best Score: ", initial[0][0])
+print("Best Score ever: ", bestScore)
 print(bestPath)
-
-print('******************************')
-print('******************************')
-print('******************************')
-print('******************************')
-print('******************************')
-print('******************************')
-print('******************************')
 print('******************************')
 print('******************************')
 
-
+test = generatePopulation(5)
+print(test)
 
 
 
