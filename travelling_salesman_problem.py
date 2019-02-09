@@ -20,6 +20,9 @@ listIdentifierUser = []
 #The chance percentage that allows an elite to survive the next generation
 survivalElite=0.10
 
+chanceOfMutation = 20
+
+bestPath = "global"
 
 #**********************************
 #******LOADING THE CSV FILE********
@@ -49,7 +52,7 @@ incrementPath=0
 #******GENERATION OF THE POPULATION******
 #****************************************
 print('---Create Population--')
-for x in range(20000):
+for x in range(1500):
     #In order to have genes of random individuals, capitals are randomly arranged.
     random.shuffle(Capitals)
     #We start from Paris, so we already have this capital in our Path
@@ -90,9 +93,6 @@ for x in range(20000):
         incrementPath += 1
 
 listScore.sort()
-print(len(listScore))
-print(listScore)
-
 scoreCount = len(listScore)
 
 def calculateScore(candidate, id):
@@ -115,7 +115,16 @@ def calculateScore(candidate, id):
     
     if(score != 0):
         listScore.append([score, id])
-        
+    
+    if(score <= bestscore and score != 0):
+        print('********z**********************')
+
+        bestPath = candidate
+        print(bestPath)
+        bestPath = "hrhr"
+
+        print('********v**********************')
+
     return score
     
 def crossover(parent1Id, parent2Id):
@@ -137,6 +146,11 @@ def crossover(parent1Id, parent2Id):
         parent2.remove(geneCapital)
     
     enfant = parent2[0:len(parent2)-1] + crossOverPartOne + [firstCity] 
+    
+    #Mutation
+    isMutated = random.randint(1,100)
+    if(isMutated<chanceOfMutation):
+        mutation(enfant)
     return enfant
 
 #This function takes into account a candidate and will make him face several fighters. 
@@ -150,44 +164,98 @@ def tournament(candidate):
     return parent
         
 
+def topCandidates(currentListScore):
+    topCandidatesCount = round(len(populationScore) * survivalElite)
+    topCandidatesList = currentListScore[0:topCandidatesCount]
+    return topCandidatesList
+
+def mutation(individual):
+    firstElement =random.randint(1,cityCount-2)
+    secondElement =random.randint(1,cityCount-2)
+    
+    cityOneToSwitch = individual[firstElement]
+    cityTwoToSwitch = individual[secondElement]
+    
+    individual[firstElement] = cityTwoToSwitch
+    individual[secondElement] = cityOneToSwitch
+    
+    return individual
+
+
 
 #****************************************
 #**********MATINF OF INDIVIDUALS*********
 #****************************************
-
-
-
 initial = listScore.copy()
 
+populationScore = []
+bestScore = 9999999
 
+for x in range(20):
+    listTopCandidatesNextGeneration = []
 
-for x in range(50):
     listScore.sort()
-    populationScore = listScore.copy()
-    populationScore.sort()
-
-    listScore = []
-    incrementPop = 0
-    scoreCount = len(populationScore)
-
-    for index, individu in enumerate(populationScore):
-        pathParent1= []
-        pathParent2= []
+    if(listScore):
+        if(listScore[0][0]<bestScore):
+            bestscore = listScore[0][0]
+        listTopCandidatesNextGeneration = topCandidates(listScore)
+        populationScore = listScore.copy()
+        populationScore.sort()
     
-        if(index != scoreCount-1):
+        listScore = []
+        incrementPop = 0
+        scoreCount = len(populationScore)
+        topCandidatesCount = round(len(populationScore) * survivalElite)
     
-            enfant = crossover(index, index + 1)
-            calculateScore(enfant, index)
-    
+        for index, individu in enumerate(populationScore):
+            pathParent1= []
+            pathParent2= []
+        
+            if(index != scoreCount-1):
+        
+                enfant = crossover(index, index + 1)
+                calculateScore(enfant, index)
+        if(listTopCandidatesNextGeneration):
+            listScore.append(listTopCandidatesNextGeneration[0])
+      
+   
 
-print(initial)
+#print(initial)
 print('******************************')
 print('******************************')
 print('******************************')
 
 listScore.sort()
 
-print(listScore)
+#print(listScore)
+
+
+
+print('******************************')
+print('******************************')
+print('******************************')
+print('******************************')
+print('******************************')
+print('******************************')
+print('******************************')
+print('******************************')
+print('******************************')
+print(initial[0])
+
+print(listScore[0])
+print(bestscore)
+print(bestPath)
+
+print('******************************')
+print('******************************')
+print('******************************')
+print('******************************')
+print('******************************')
+print('******************************')
+print('******************************')
+print('******************************')
+print('******************************')
+
 
 
 
