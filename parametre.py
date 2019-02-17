@@ -8,13 +8,13 @@ pointDeDepart="Paris"
 #nombre d'individu dans la premiere génération.
 populationTotal=200
 #Nombre de generation.
-generationTotal=200
+generationTotal= 50
 #Nombre d'individu qui vont combatre dans un tournoi.
-combattantParTournoi=2
+combattantParTournoi=1
 #EN % - Probabilité d'avoir une mutation par individu (en pourcentage).
-mutationProbabilite = 5#%
+mutationProbabilite = 25#%
 #EN % - L'élite pouvant survivre à la génération suivante  (en pourcentage).
-survivantElitePourcentage = 2#%
+survivantElitePourcentage = 4#%
 # Afin d'avoir une bonne diversité entre les individus, il est possible de creer une nouvelle population dans une génération
 # Il est preferable que cette nouvelle population soit faible par raport à la population de début
 #Par défaut elle correspond à 3% de la population totale de début
@@ -77,9 +77,16 @@ CapitalesList=[]
 #Représente le totale des capitales 
 capitaleTotal=0
 
+generationList= []
+meilleurScoreList=[]
+
+meilleurlowCostRoutePrixList=[]
+routeLenteScoreList=[]
 meilleurQPscore = 9999999
 meilleurQPprix = 0
 meilleurQPtemps = 0
 meilleurQPchemin  = []
 meilleurQPtransport = []
 
+meilleurQPprixList = []
+meilleurQPtempsList = []

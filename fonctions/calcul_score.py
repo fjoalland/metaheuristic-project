@@ -147,7 +147,7 @@ def calculerRapportQualitePrix(individu):
 					prix += transportMaritine * parametre.bateauPrix
 				elif(trajetSelectionne == "avion"):		
 					transportListe.append('plane')
-					temps += transportAvion / parametre.avionVitesse
+					temps += (transportAvion / parametre.avionVitesse) +1
 					prix += transportAvion * parametre.avionPrix
 
 	score =  ((prix * 10) + temps)/2
