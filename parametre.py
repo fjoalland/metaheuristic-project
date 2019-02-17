@@ -2,7 +2,7 @@
 #****VARIABLE MODIFIABLE****
 #***************************
 #Contiend toutes les donnees inter capitales dans un fichier logique de type CSV
-fichierDonnees = "base2.csv"
+fichierDonnees = "data_complete.csv"
 #Point de départ du circuit
 pointDeDepart="Paris"
 #nombre d'individu dans la premiere génération.
