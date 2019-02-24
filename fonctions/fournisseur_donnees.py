@@ -11,7 +11,7 @@ import parametre as parametre
 
 def chargement_donnees():
 	#Chargement du fichier CSV avec toutes les données
-	with open("donnees/" + parametre.fichierDonnees, newline='') as csvFichier:
+	with open("donnees/" + parametre.fichierDonnees, newline='', encoding = "ISO-8859-1") as csvFichier:
 		#On récupère les données dans une liste
 		csvFichierDonnees = csv.reader(csvFichier, delimiter=';')
 		for index, ligne in enumerate(csvFichierDonnees):
