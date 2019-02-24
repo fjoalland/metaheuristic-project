@@ -112,7 +112,7 @@ for x in range(parametre.generationTotal):
 	print("***************")
 	print("generation: ", x)
 	print("population: ", len(parametre.populationList))
-	print("meilleur score de cette generation:", parametre.scoreList[0][0])
+	print("Best score of this generation:", parametre.scoreList[0][0])
 
 print("***************")
 print("THE BEST SCORE THROUGH THE EVOLUTION")
