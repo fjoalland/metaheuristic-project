@@ -31,6 +31,10 @@ Directory fonctions:
 ## Dependencies
 - Python3
 
+## RUN
+![](https://image.noelshack.com/fichiers/2019/08/7/1551023182-screengif.gif)
+
+
 
 
 
