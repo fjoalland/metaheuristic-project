@@ -19,7 +19,6 @@ def chargement_donnees():
 			parametre.capitaleTotal = len(ligne)
 
 			if(index == 0):
-				print(ligne)
 				parametre.CapitalesList = ligne
 				#Supprime le premiere element qui est une case vide dans le fichier CSV
 				del parametre.CapitalesList[0]
